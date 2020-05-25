@@ -219,7 +219,159 @@ where we want them to appear. This of course gives the same output:
   doudoush:~$
 \end{lstlisting}
 
-\subsection{Functions}
+\subsection{Functions and argument forwarding}
+
+This is the most important part of this section. In this subsection, I will
+try to answer as clearly as possible the question ``how the hell are variables
+passed in Python?''. The quick answer is ``by assignment''. The useless (but accurate)
+answer is ``by un-rebindable reference''. Is that clear?
+
+\vspace{5mm}
+
+No, of course it's not clear. Firstly, you need to know that in
+Python, there are mutable and immutable types. Most primitive types
+are immutable. If you want to change their value, you must create a
+new object. For example, int, float, string, tuples are immutable. You
+cannot do:
+
+\begin{lstlisting}[language=python]
+  cactus = 'hallo'
+  cactus[1] = 'e'
+\end{lstlisting}
+
+You will get the following error message:
+
+\begin{lstlisting}[language=bash]
+  doudoush:~$ python3 variables.py
+    Traceback (most recent call last):
+    File "forwarding.py", line 2, in <module>
+      a[1] = 'e'
+      TypeError: 'str' object does not support item assignment
+  doudoush:~$
+\end{lstlisting}
+
+Lists however are mutable, you can change elements inside a list
+(more on that in the data structure section).
+
+\vspace{5mm}
+
+There are two different types of operation: in-place and not in-place.
+In place means that the operation is applied directly on the variable, while the later
+returns a new variable. You cannot do in-place operations on immutable variables,
+which makes sense as they cannot be modified directly.
+
+\vspace{5mm}
+
+Last point before answering the real question, binding the variables. If you don't
+remember, binding a variable is the action of linking a variable to its actual value.
+Let's first take a look at a quick example:
+
+\begin{lstlisting}[language=python]
+  a = 5
+  b = a
+  b += 1
+  print('a is', a)
+  print('b is', b)
+\end{lstlisting}
+
+Which gives:
+
+\begin{lstlisting}[language=bash]
+  doudoush:~$ python3 forwarding.py
+    a is 5
+    b is 6
+  doudoush:~$
+\end{lstlisting}
+
+Here, ``b'' is a reference on a NEW object with value 5. Thus, changing ``b'' DOES NOT have any impact
+on the variable ``a''. You can imagine that when we do ``b = a'', a is actually replaced by its value,
+meaning that this code is exactly the same:
+
+\begin{lstlisting}[language=python]
+  a = 5
+  b = 5
+  b += 1
+  print('a is', a)
+  print('b is', b)
+\end{lstlisting}
+
+Basically, when you create a variable, you are allocating some memory and assigning a reference
+to this memory location. You cannot change what this reference is pointing to.
+
+\vspace{5mm}
+Now, let's get back to the real problem: how are arguments passed in functions. The answer is by reference.
+BUT, without forgetting the rules aforementioned. Let's take a look at a quick example:
+
+\begin{lstlisting}[language=python]
+  def my_function(my_int, my_list):
+    my_list[2] = 5
+    my_int += 4
+    print('In function', my_int)
+
+    my_int = 1
+    my_list = [0, 1, 2, 3, 4]
+    my_function(my_int, my_list)
+    print('my_int', my_int)
+    print('my_list', my_list)
+\end{lstlisting}
+
+Gives:
+
+\begin{lstlisting}[language=bash]
+  doudoush:~$ python3 forwarding.py
+    In function 5
+    my_int 1
+    my_list [0, 1, 5, 3, 4]
+  doudoush:~$
+\end{lstlisting}
+
+``my\_int'' is immutable. So whatever you do, you cannot change it. ``my\_list'' is mutable,
+so we can change the elements inside the list in the function. But what if we tried to
+reassign ``my\_list?'' Let's see:
+
+\begin{lstlisting}[language=python]
+  def my_function(my_int, my_list):
+    my_list[2] = 5
+    my_int += 4
+    print('In function', my_int)
+    my_list = [3, 6, 25]
+    print('In function', my_list)
+
+    my_int = 1
+    my_list = [0, 1, 2, 3, 4]
+    my_function(my_int, my_list)
+    print('my_int', my_int)
+    print('my_list', my_list)
+\end{lstlisting}
+
+Which gives:
+
+\begin{lstlisting}[language=bash]
+  doudoush:~$ python3 forwarding.py
+    In function 5
+    In function [3, 6, 25]
+    my_int 1
+    my_list [0, 1, 5, 3, 4]
+  doudoush:~$
+\end{lstlisting}
+
+So what happened here? Remember what I said? You CANNOT REBIND A REFERENCE.
+So basically, you can modify a mutable object, but you cannot reassign it.
+When you do ``my\_list += [3, 6, 25]'' you are creating a new local object called ``my\_list''
+which ONLY exists in the scope of this function. When we exit the function, the local ``my\_list''
+no longer exists, and we are back with the good old ``my\_list'', which, as a nice mutable
+object, got modified in the function.
+
+\vspace{5mm}
+
+Soooo, to recap:
+
+\begin{itemize}
+\item When you use the ``='' operator, you are creating a new object.
+\item When you pass an object to a function, it is passed by reference.
+\item If the object is mutable, you can modify it (but not reassign it)
+\item If it is immutable, you cannot change it at all.
+\end{itemize}
 
 \subsection{Conditions and loop}
 
@@ -235,10 +387,10 @@ where we want them to appear. This of course gives the same output:
 \subsection{Exercises}
 
 \subsection{Data structures}
-\subsubsection{Lists}
-\subsubsection{Tuples}
-\subsubsection{Sets}
-\subsubsection{Dicts}
+\subsubsection{List}
+\subsubsection{Tuple}
+\subsubsection{Set}
+\subsubsection{Dict}
 
 \subsection{Arguments and named arguments}
 
