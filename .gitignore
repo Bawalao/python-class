@@ -1,0 +1,9 @@
+template.tex
+*.aux
+*~
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.pdf

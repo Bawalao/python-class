@@ -1,0 +1,162 @@
+
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\renewcommand\familydefault{\sfdefault}
+\usepackage{tgheros}
+
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{tikz}
+
+\usepackage{geometry}
+\geometry{left=25mm,right=25mm,%
+bindingoffset=0mm, top=20mm,bottom=20mm}
+
+
+\linespread{1.3}
+
+\newcommand{\linia}{\rule{\linewidth}{0.5pt}}
+
+% custom theorems if needed
+\newtheoremstyle{mytheor}
+    {1ex}{1ex}{\normalfont}{0pt}{\scshape}{.}{1ex}
+    {{\thmname{#1 }}{\thmnumber{#2}}{\thmnote{ (#3)}}}
+
+\theoremstyle{mytheor}
+\newtheorem{defi}{Definition}
+
+% my own titles
+\makeatletter
+\renewcommand{\maketitle}{
+\begin{center}
+\vspace{2ex}
+{\huge \textsc{\@title}}
+\vspace{1ex}
+\\
+\linia\\
+\@author \hfill \@date
+\vspace{4ex}
+\end{center}
+}
+\makeatother
+%%%
+
+% custom footers and headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{Learning Python with Doudou}
+\cfoot{}
+\rfoot{Page \thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+%
+
+% code listing settings
+\usepackage{listings}
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    aboveskip={1.0\baselineskip},
+    belowskip={1.0\baselineskip},
+    columns=fixed,
+    extendedchars=true,
+    breaklines=true,
+    tabsize=4,
+    prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+    frame=lines,
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+    keywordstyle=\color[rgb]{0.627,0.126,0.941},
+    commentstyle=\color[rgb]{0.133,0.545,0.133},
+    stringstyle=\color[rgb]{01,0,0},
+    numbers=left,
+    numberstyle=\small,
+    stepnumber=1,
+    numbersep=10pt,
+    captionpos=t,
+    escapeinside={\%*}{*)}
+}
+
+%%%----------%%%----------%%%----------%%%----------%%%
+
+\begin{document}
+
+\title{Learning Python with Doudou}
+
+\author{Brian Teixeira, Doudou University}
+
+\date{05/25/2020}
+
+\maketitle
+
+Welcome to this Python class! In this series of tutorials, you will
+learn how to fully master the python programming language through
+explanations, examples and exercises. This python class will be split
+into three main parts: Basics, Intermediate and Advanced. Following
+this tutorial, you will be able to unlock a new series of tutorials
+called Machine Learning with Python! Pretty exciting right?
+
+\vspace{5mm}
+
+The ``Basics`` will mostly present general stuff about the python
+programming language. You will get to learn about functions,
+variables, scopes, packages etc. Some of the things will sound very
+basic and obvious, but it's always great to take a fresh look at things.
+I will try to go as far as I can while describing the behavior of the
+language, especially with regards to the management of the memory.
+
+\vspace{5mm}
+
+The ``Intermediate`` part will be the longest part of this tutorial,
+not because it's the most complex, but because it's the one that
+will cover the biggest part of the language, because as you will understand,
+the python language, while rich, is not complex. In this section, you will
+get to learn about objects, exceptions, generators and other stuff. I will
+insist a lot on the object oriented programming part, as this is, in my
+opinion, a very important aspect of the language, and of programming in general.
+Don't make me say everything should always be object, but in Python it's kind
+of the case. I love objects, but only when things are well designed. Thus,
+in this part I will go a bit further than just focusing on the language itself
+and will go through some good design practices.
+
+\vspace{5mm}
+
+Finally, the ``Advanced`` part will go through some more rarely used features
+of the language, including multiprocessing or networking. You will quickly
+realize that this part is not called advanced because it's difficult, but rather
+because it's about things you will be less likely to use in your everyday
+python journey.
+
+\vspace{5mm}
+
+For each point of the lessons, you will find definitions, examples and exercises.
+For the first lessons, the exercises will be very fast and academic, but the more
+you progress in this series of tutorials, the more they will turn into projects.
+There is no recommended time to finish exercises or projects, because we do not
+code against the clock. We want to make sure that we understand what we are doing.
+Also, feel free to reach out to me if there are things that are not clearly explained,
+or if there are mistakes.
+
+\vspace{5mm}
+
+All right, enough talking, let's go!
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\include{basics}
+
+\end{document}
