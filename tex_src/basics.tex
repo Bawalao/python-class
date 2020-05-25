@@ -31,8 +31,8 @@ Now let's execute this code.
 
 \begin{lstlisting}[language=bash]
   doudoush:~$ python3 variable.py
-    5 of type <class 'int'>
-    hello of type <class 'str'>
+   5 of type <class 'int'>
+   hello of type <class 'str'>
   doudoush:~$
 \end{lstlisting}
 
@@ -46,31 +46,178 @@ an error happens. For example, if you forget to define a variable, the error wil
 be raised only when you try to use this variable/
 
 \begin{lstlisting}[language=python]
-blossom = 'commander and the leader'
-bubbles = 'the joy and a laugher'
+  blossom = 'commander and the leader'
+  bubbles = 'the joy and a laugher'
 
-print('Blossom', blossom)
-print('Bubbles', bubbles)
-print('Buttercup', buttercup)
+  print('Blossom', blossom)
+  print('Bubbles', bubbles)
+  print('Buttercup', buttercup)
 \end{lstlisting}
 
 Gives the output:
 
 \begin{lstlisting}[language=bash]
-doudoush:~$ python3 variable.py
+  doudoush:~$ python3 variables.py
    Blossom commander and the leader
    Bubbles the joy and a laugher
    Traceback (most recent call last):
      File "variables.py", line 12, in <module>
        print('Buttercup', buttercup)
    NameError: name 'buttercup' is not defined
-doudoush:~$
+  doudoush:~$
 \end{lstlisting}
 
 Other languages like C++ would have complained that the variable ``buttercup''
 did not exist before printing the two other variables.
 
-\subsection{Variables formatting}
+\subsection{Combining variables}
+
+Another cool aspect of the Python language is the way you can combine variables.
+For example, as with many other languages, you can combine high level types with
+lower level types. For example, if you do the sum of an integer and a float,
+the result will be a variable of type float:
+
+\begin{lstlisting}[language=python]
+cactus = 4
+cactus += 0.5
+
+print(cactus, 'of type', type(cactus))
+\end{lstlisting}
+
+Outputs:
+
+\begin{lstlisting}[language=bash]
+  doudoush:~$ python3 variables.py
+    4.5 of type <class 'float'>
+  doudoush:~$
+\end{lstlisting}
+
+Pretty obvious yes. But what happens if we try to add an integer to a string?
+
+\begin{lstlisting}[language=python]
+  cactus = 3
+  cactus += ' is your lucky number'
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash]
+  doudoush:~$ python3 variables.py
+    Traceback (most recent call last):
+    File "variables.py", line 2, in <module>
+      cactus += ' is your lucky number'
+      TypeError: unsupported operand type(s) for +=: 'int' and 'str'
+  doudoush:~$
+\end{lstlisting}
+
+This is because it tries to call the ``+'' operator from the ``int'' primitive type.
+However, this operator is not defined for variables of type ``str''. We will get
+into more details in the following section about functions.
+
+\vspace{5mm}
+
+You may thus wonder how can we combine strings and integers? Well, there are
+several ways. The quick and dirty way is to explicitly cast the variable to
+the target type. Of course, it does not make sense to try to cast a string to
+an integer, as there is no obvious semantic to this operation. So we will do
+the other way around, and try to convert 3 into ``3``. The cast operators are simply
+the type of the variable used as a function:
+
+\begin{lstlisting}[language=python]
+  cactus = 3
+  cactus = str(cactus) + ' is your lucky number'
+  print(cactus)
+\end{lstlisting}
+
+Which works as expected:
+
+\begin{lstlisting}[language=bash]
+  doudoush:~$ python3 variables.py
+    3 is your lucky number
+  doudoush:~$
+\end{lstlisting}
+
+However, for string there is a much better way of doing this: string formatting!
+There are three different ways of doing string formatting: the old way, the modern way
+and the very modern way. The old way is a C-style formatting:
+
+\begin{lstlisting}[language=python]
+  cactus = 3
+  my_str = '%d is your lucky number' % cactus
+\end{lstlisting}
+
+You can also define the way you want the number will be displayed. For example, if you
+want to add zeros before the number, you can write ``\%03d'' to specify that
+the number should have 3 digits:
+
+\begin{lstlisting}[language=python]
+  my_str = '%03d is your lucky number' % 3
+  print(my_str)
+  my_str = '%03d is our lucky number' % 25
+  print(my_str)
+\end{lstlisting}
+
+Will output:
+\begin{lstlisting}[language=bash]
+  doudoush:~$ python3 variables.py
+    003 is your lucky number
+    025 is our lucky number
+  doudoush:~$
+\end{lstlisting}
+
+The number got padded with two zeros, and the number twenty five with only one zero,
+as it's already a two-digits number.
+
+\vspace{5mm}
+
+Here, the ``\%d'' is the syntax to substitute an entry to an integer. For floating
+number, we would use ``\%f'', for string ``\%s''. We can also use this syntax to
+substitute multiple variables:
+
+\begin{lstlisting}[language=python]
+  cactus = 3
+  kind = 'lucky number'
+  my_str = '%d is your %s' % (cactus, kind)
+\end{lstlisting}
+
+
+The modern way uses the ``format'' keyword. The main advantage of this method is
+that you do not need to specify the type of the variable you want to combine.
+We can then write the previous code like this:
+
+\begin{lstlisting}[language=python]
+  cactus = 3
+  kind = 'lucky number'
+  my_str = '{} is your {}'.format(cactus, kind)
+\end{lstlisting}
+
+Here, we just need to add ``{}'' every time we need to insert a variable. We them
+substitute all of these variables as arguments to the format function. We can also
+do zeros padding this way:
+
+\begin{lstlisting}[language=python]
+  cactus = 3
+  kind = 'lucky number'
+  my_str = '{:03} is your {}'.format(cactus, kind)
+\end{lstlisting}
+
+Finally, the very modern (Python >= 3.6) way does not require the use of the format
+function, and uses a new language syntax:
+
+\begin{lstlisting}[language=python]
+  cactus = 3
+  kind = 'lucky number'
+  my_str = f'{cactus:03} is your {kind}'
+  print(my_str)
+\end{lstlisting}
+
+Here, we just need to add the ``f'' character before the string to specify that
+this string needs formatting, and we then just add the name of the variable directly
+where we want them to appear. This of course gives the same output:
+
+\begin{lstlisting}[language=bash]
+  doudoush:~$ python3 variables.py
+    003 is your lucky number
+  doudoush:~$
+\end{lstlisting}
 
 \subsection{Functions}
 
