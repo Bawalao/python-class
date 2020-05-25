@@ -1,38 +1,98 @@
 
-\section*{Problem 1}
+\section{Basics}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Welcome to the first part of the Doudou Python tutorial!  This part
+will cover all basic Python primitives including functions, variables,
+how they are managed etc. Let's go!
 
-% code from http://rosettacode.org/wiki/Fibonacci_sequence#Python
-\begin{lstlisting}[label={list:first},caption=Sample Python code -- Fibonacci sequence calculated analytically.]
-from math import *
+\subsection{Variables}
 
-# define function 
-def analytic_fibonacci(n):
-  sqrt_5 = sqrt(5);
-  p = (1 + sqrt_5) / 2;
-  q = 1/p;
-  return int( (p**n + q**n) / sqrt_5 + 0.5 )
- 
-# define range
-for i in range(1,31):
-  print analytic_fibonacci(i)
+Python is a (mostly) interpreted dynamically typed language. Why
+mostly? Because it is possible to compile Python. We will get into
+more details about it in the advanced section. Why dynamically typed?
+Because in Python, you don't need to explicitly specify the type of a
+variable, it will be deduced based on the value you are assigning the
+variable to. Moreover, you can reassign the same variable with a
+different type, because the type will dynamically change based on the
+value you are assigning to it. Let's look at an example. In Python,
+we can use the ``type'' keyword to evaluate the type of a variable.
+Also, we will use the ``print'' built-in function, which takes an
+``infinite'' number of arguments as input and displays them on the
+standard output, separated by spaces.
+
+\begin{lstlisting}[language=python]
+  a = 5
+  print(a, 'of type', type(a))
+  a = 'hello'
+  print(a, 'of type', type(a))
 \end{lstlisting}
 
-Following Listing~\ref{list:first}\ldots{} 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Now let's execute this code.
 
-\section*{Problem 2}
-
-\begin{lstlisting}[label={list:second},caption=Sample Bash code.]
-#! /bin/bash
-python stage1.py
-echo "Stage I done!"
-python stage2.py
-echo "Stage II done!"
-python stage3.py
-echo "Stage III done!"
+\begin{lstlisting}[language=bash]
+  doudoush:~$ python3 variable.py
+    5 of type <class 'int'>
+    hello of type <class 'str'>
+  doudoush:~$
 \end{lstlisting}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+While other languages (like C++) would have complained that you cannot assign
+the value ``hello'' of type string to the variable ``a'' of type integer, Python
+doesn't care and simply reassign the value and the type of the variable.
 
+\vspace{5mm}
+Also, remember that as the language is interpreted, you can execute some code before
+an error happens. For example, if you forget to define a variable, the error will
+be raised only when you try to use this variable/
+
+\begin{lstlisting}[language=python]
+blossom = 'commander and the leader'
+bubbles = 'the joy and a laugher'
+
+print('Blossom', blossom)
+print('Bubbles', bubbles)
+print('Buttercup', buttercup)
+\end{lstlisting}
+
+Gives the output:
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 variable.py
+   Blossom commander and the leader
+   Bubbles the joy and a laugher
+   Traceback (most recent call last):
+     File "variables.py", line 12, in <module>
+       print('Buttercup', buttercup)
+   NameError: name 'buttercup' is not defined
+doudoush:~$
+\end{lstlisting}
+
+Other languages like C++ would have complained that the variable ``buttercup''
+did not exist before printing the two other variables.
+
+\subsection{Variables formatting}
+
+\subsection{Functions}
+
+\subsection{Conditions and loop}
+
+\subsection{Exercises}
+
+\subsection{Modules and Packages}
+
+\subsection{Dealing with external resources}
+\subsubsection{Parsing arguments}
+\subsubsection{Files}
+\subsubsection{The sys module}
+
+\subsection{Exercises}
+
+\subsection{Data structures}
+\subsubsection{Lists}
+\subsubsection{Tuples}
+\subsubsection{Sets}
+\subsubsection{Dicts}
+
+\subsection{Arguments and named arguments}
+
+\subsection{Project: myFind}
