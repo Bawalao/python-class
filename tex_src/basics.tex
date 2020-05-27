@@ -220,6 +220,66 @@ where we want them to appear. This of course gives the same output:
 \end{lstlisting}
 
 \subsection{Functions and argument forwarding}
+Before going into the important part of this section, let's just take a quick look
+at functions in general in Python. First thing first, we create functions using
+the ``def'' keyword, as follow:
+
+\begin{lstlisting}[language=python]
+  def say_hello():
+    print('Hello!')
+\end{lstlisting}
+
+Note that we indented the code after defining our function. When we increment the
+indentation, we create a ``scope''. A scope is kind of a virtual environment where variables live.
+When you create a variable within a scope, it only lives in this scope. So if you create
+a variable in a function, it will not be available outside of the function. Same happens with
+other languages such as C++. However, in C++, scopes are delimited by ``{}'', while in Python they
+are delimited by indent levels.
+
+\vspace{5mm}
+
+You can use either tabs or spaces for the indentation. However, in a file, as long as you started
+using something (say spaces) you cannot use something else later on. I recommend using only spaces,
+as editors tend to show tabulations differently (sometimes 2 spaces, sometimes 4).
+
+\vspace{5mm}
+
+Another important thing to know about functions is that functions are also variables. Meaning this
+code works perfectly:
+
+\begin{lstlisting}[language=python]
+  def say_hello():
+    print('Hello!')
+  new_func = say_hello
+  new_func()
+\end{lstlisting}
+
+Last important thing you need to know is that there is no such thing as void functions in Python.
+Meaning that all functions in Python return something. I know what you're thinking: ``What? How come?
+You didn't return anything here!''. That's true, but Python did. By default, if you do not explicitely
+return something, Python returns ``None''. None is a special ``variable'' in Python,
+like ``NULL/nullptr'' in C/C++. Like all other variables, it has a type, which is ``NoneType''.
+So if we do:
+
+\begin{lstlisting}[language=python]
+  def say_hello():
+    print('Hello!')
+  new_func = say_hello
+  result = new_func()
+  print(type(result))
+\end{lstlisting}
+
+We get:
+\begin{lstlisting}[language=bash]
+  doudoush:~$ python3 func.py
+    Hello!
+    <class 'NoneType'>
+  doudoush:~$
+\end{lstlisting}
+
+That's pretty much all you need to know about functions for now.
+
+\subsubsection{Argument forwarding}
 
 This is the most important part of this section. In this subsection, I will
 try to answer as clearly as possible the question ``how the hell are variables
@@ -308,11 +368,11 @@ BUT, without forgetting the rules aforementioned. Let's take a look at a quick e
     my_int += 4
     print('In function', my_int)
 
-    my_int = 1
-    my_list = [0, 1, 2, 3, 4]
-    my_function(my_int, my_list)
-    print('my_int', my_int)
-    print('my_list', my_list)
+  my_int = 1
+  my_list = [0, 1, 2, 3, 4]
+  my_function(my_int, my_list)
+  print('my_int', my_int)
+  print('my_list', my_list)
 \end{lstlisting}
 
 Gives:
@@ -337,11 +397,11 @@ reassign ``my\_list?'' Let's see:
     my_list = [3, 6, 25]
     print('In function', my_list)
 
-    my_int = 1
-    my_list = [0, 1, 2, 3, 4]
-    my_function(my_int, my_list)
-    print('my_int', my_int)
-    print('my_list', my_list)
+  my_int = 1
+  my_list = [0, 1, 2, 3, 4]
+  my_function(my_int, my_list)
+  print('my_int', my_int)
+  print('my_list', my_list)
 \end{lstlisting}
 
 Which gives:
