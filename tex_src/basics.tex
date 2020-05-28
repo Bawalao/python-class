@@ -277,6 +277,22 @@ We get:
   doudoush:~$
 \end{lstlisting}
 
+You can otherwise return a real result using the ``return'' keyword:
+
+\begin{lstlisting}[language=python]
+  def say_hello():
+    return 'Hello!'
+
+  result = say_hello()
+  print(result)
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash]
+  doudoush:~$ python3 func.py
+    Hello!
+  doudoush:~$
+\end{lstlisting}
+
 That's pretty much all you need to know about functions for now.
 
 \subsubsection{Argument forwarding}
@@ -434,6 +450,67 @@ Soooo, to recap:
 \end{itemize}
 
 \subsection{Conditions and loop}
+I will go very quickly about this part because there is nothing special here.
+As for the functions, conditions and loops live in scopes, defined with indent levels.
+Conditions are defined with the ``if'' keyword, as follow:
+
+\begin{lstlisting}[language=python]
+  def is_even(n):
+    if n % 2 == 0:
+      return True
+    return False
+\end{lstlisting}
+
+There are two types of loops in Python: While loops, and for loops. You can exit
+these loops using the ``break'' keyword or go the next iteration using the ``continue''
+keyword. The first kind of loop repeats a scope of instructions until a criterion is met.
+
+For example:
+
+\begin{lstlisting}
+  i = 0
+  while i < 10:
+    i += 1
+\end{lstlisting}
+
+Here we are incrementing the value of ``i'' by 1 until it reaches 10. Unlike other
+languages like C++, there is no ``do-while'' instructions. So here, the condition has
+to be true for the code to be executed even the first time.
+
+Let's take a look at the following C++ code:
+
+\begin{lstlisting}[language=C++]
+  int i = 20;
+  do
+  {
+    i += 1;
+  } while(i < 10);
+  std::cout << i << std::endl;
+\end{lstlisting}
+
+If we compile and execute this code inside a main, it will display 21. This is because
+the ``do-while'' loop will always execute the scope once before checking the condition.
+As I said before, there is no such thing in Python. However, you can emulate this behavior
+using other methods. For example:
+
+\begin{lstlisting}[language=python]
+  while True:
+    something()
+    if not condition:
+      break
+\end{lstlisting}
+
+For-loop functions iterate over all elements of an iterable object. We can then for example
+print all elements in a list using a for loop:
+
+\begin{lstlisting}
+  my_list = [1, 2, 3]
+  for elt in my_list:
+     print(elt)
+\end{lstlisting}
+
+You can basically give any kind of ``iterable'' objects to the for loop. We will see in the future
+that you can even create your own kind of iterable objects.
 
 \subsection{Exercises}
 
