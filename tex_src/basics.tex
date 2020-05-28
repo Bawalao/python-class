@@ -293,6 +293,16 @@ You can otherwise return a real result using the ``return'' keyword:
   doudoush:~$
 \end{lstlisting}
 
+Also note that there is no static return type in a function, as the language is dynamically typed. You can
+then do:
+
+\begin{lstlisting}
+  def my_func(i):
+    if i < 2:
+      return True
+    return 'cactus'
+\end{lstlisting}
+
 That's pretty much all you need to know about functions for now.
 
 \subsubsection{Argument forwarding}
@@ -461,6 +471,17 @@ Conditions are defined with the ``if'' keyword, as follow:
     return False
 \end{lstlisting}
 
+You can also check multiple conditions this way:
+\begin{lstlisting}[language=python]
+    if something:
+      blabla()
+    elif something\_else:
+      blablabla()
+    else:
+      blibloblablu()
+\end{lstlisting}
+
+
 There are two types of loops in Python: While loops, and for loops. You can exit
 these loops using the ``break'' keyword or go the next iteration using the ``continue''
 keyword. The first kind of loop repeats a scope of instructions until a criterion is met.
@@ -512,7 +533,18 @@ print all elements in a list using a for loop:
 You can basically give any kind of ``iterable'' objects to the for loop. We will see in the future
 that you can even create your own kind of iterable objects.
 
-\subsection{Exercises}
+\subsection{Exercise 1}
+%% For this first exercise, you need to:
+
+\begin{itemize}
+\item Write the ``powerpuff\_role'' function which takes the name of a powerpuff girl as argument
+  and returns the role of the powerpuff girl. For example, powerpuff\_role('Blossom') should return
+  ``commander and the leader''. If the argument is not a powerpuff girl, it should return None.
+\item Write the ``get\_roles'' function which takes a list of string as parameter and prints the powerpuff role
+  of each of them. It should explicitely print if the given parameter is not a powerpuff girl.
+\item Write the ``anonymize'' function, which takes a list of string as parameter and replace them with their index
+  in the list. For example anonymize(['Blossom', 'Bubble']) should return [0, 1].
+\end{itemize}
 
 \subsection{Modules and Packages}
 
@@ -521,7 +553,7 @@ that you can even create your own kind of iterable objects.
 \subsubsection{Files}
 \subsubsection{The sys module}
 
-\subsection{Exercises}
+\subsection{Exercise 2}
 
 \subsection{Data structures}
 \subsubsection{List}
