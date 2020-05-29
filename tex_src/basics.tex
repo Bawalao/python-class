@@ -972,7 +972,144 @@ init file will always be loaded. So when we run ``from doudou.baking import'',
 it will first read the ``doudou'' module and see if it imports something useful from
 the module. Then, it will go into the ``baking'' module and load it.
 
-% main
+\subsubsection{Main}
+
+As I mentioned, as long as you import a module, the whole file is interpreted.
+This is not always the expected behavior. Let me give you an example. Let's say
+we have a wonderful module called ``song'' which defines some song and sing
+a different song with regards to today's date. Such a module could look like this:
+
+\begin{lstlisting}[language=python]
+import datetime
+
+def powerpuff_song():
+  print('Blossom! Commander and the leader')
+  print('Bubbles! She is the joy and a laugher')
+  print('Buttercup! She is the taughest fighter')
+  print('Powerpuff save the day...')
+  print('tou tou touuuu')
+
+def posca_song():
+  print('POSCA POSCAAAA')
+  print('tou toudou tou tou tou touuu')
+  print('tou toudou tou tou tou touuu')
+
+current_day = datetime.now().day
+if current_day % 2 == 0:
+  powerpuff_song()
+else:
+  posca_song()
+\end{lstlisting}
+
+I know, it's a great module. But we are doing great things here right? So let's run it.
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 song.py
+  POSCA POSCAAAA
+  tou toudou tou tou tou touuu
+  tou toudou tou tou tou touuu
+doudoush:~$
+\end{lstlisting}
+
+Oh yeah I love that song. Today is the 29th so that's the one that got picked.
+Ok, our module is great and we love it. We love it so much that we want to use these
+songs in our wonderful jukebox module:
+
+\begin{lstlisting}[language=python]
+from song import powerpuff_song, posca_song
+
+def jukebox(track):
+    if track == 1:
+        powerpuff_song()
+    elif track == 2:
+        posca_song()
+    else:
+        print('We only have two songs for now !')
+
+print('Running the jukebox!')
+jukebox(1)
+\end{lstlisting}
+
+Great! Let's run it!
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 jukebox.py
+  POSCA POSCAAAA
+  tou toudou tou tou tou touuu
+  tou toudou tou tou tou touuu
+  Running the jukebox!
+  Blossom! Commander and the leader
+  Bubbles! She is the joy and a laugher
+  Buttercup! She is the taughest fighter
+  Powerpuff save the day...
+  tou tou touuuu
+doudoush:~$
+\end{lstlisting}
+
+And that's not what we wanted. The problem is that when we imported the songs line 1 of
+``jukebox.py'', the whole file got interpreted. So basically, it's like we did ``python3 song.py''
+before executing the jukebox code. So, what do we do? I don't want to rewrite the songs. But I
+still want the previous behavior when I call ``python3 song.py''. Python has a way of checking
+if we are actually importing a module or running it. This information is store in the
+``\_\_name\_\_' variable. Let's write a dummy file called ``dummy.py'':
+
+\begin{lstlisting}[language=python]
+print('name is', __name__)
+\end{lstlisting}
+
+And now, let's run it, and then import it:
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 dummy.py
+  name is __main__
+doudoush:~$ python3 -c 'import dummy'
+  name is dummy
+doudoush:~$
+\end{lstlisting}
+
+As you can see, when we call Python on the module, the name is ``\_\_main\_\_',
+but when we just import it, the name is ``dummy'', the name of the module. We can
+then simply change the ``song.py'' file like this:
+
+\begin{lstlisting}[language=python]
+import datetime
+
+def powerpuff_song():
+  print('Blossom! Commander and the leader')
+  print('Bubbles! She is the joy and a laugher')
+  print('Buttercup! She is the taughest fighter')
+  print('Powerpuff save the day...')
+  print('tou tou touuuu')
+
+def posca_song():
+  print('POSCA POSCAAAA')
+  print('tou toudou tou tou tou touuu')
+  print('tou toudou tou tou tou touuu')
+
+if __name__ == '__main__':
+  current_day = datetime.now().day
+  if current_day % 2 == 0:
+    powerpuff_song()
+  else:
+    posca_song()
+\end{lstlisting}
+
+So now we have the expected behavior:
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 song.py
+  POSCA POSCAAAA
+  tou toudou tou tou tou touuu
+  tou toudou tou tou tou touuu
+doudoush:~$ python3 jukebox.py
+  Running the jukebox!
+  Blossom! Commander and the leader
+  Bubbles! She is the joy and a laugher
+  Buttercup! She is the taughest fighter
+  Powerpuff save the day...
+  tou tou touuuu
+doudoush:~$
+\end{lstlisting}
 
 \subsection{Dealing with external resources}
 \subsubsection{Parsing arguments}
