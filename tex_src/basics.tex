@@ -189,7 +189,7 @@ We can then write the previous code like this:
   my_str = '{} is your {}'.format(cactus, kind)
 \end{lstlisting}
 
-Here, we just need to add ``{}'' every time we need to insert a variable. We them
+Here, we just need to add ``\{\}'' every time we need to insert a variable. We them
 substitute all of these variables as arguments to the format function. We can also
 do zeros padding this way:
 
@@ -233,7 +233,7 @@ Note that we indented the code after defining our function. When we increment th
 indentation, we create a ``scope''. A scope is kind of a virtual environment where variables live.
 When you create a variable within a scope, it only lives in this scope. So if you create
 a variable in a function, it will not be available outside of the function. Same happens with
-other languages such as C++. However, in C++, scopes are delimited by ``{}'', while in Python they
+other languages such as C++. However, in C++, scopes are delimited by ``\{\}'', while in Python they
 are delimited by indent levels.
 
 \vspace{5mm}

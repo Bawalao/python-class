@@ -7,3 +7,4 @@ template.tex
 *.bbl
 *.blg
 *.pdf
+.DS_STORE
