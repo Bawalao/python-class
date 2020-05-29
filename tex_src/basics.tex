@@ -21,19 +21,19 @@ Also, we will use the ``print'' built-in function, which takes an
 standard output, separated by spaces.
 
 \begin{lstlisting}[language=python]
-  a = 5
-  print(a, 'of type', type(a))
-  a = 'hello'
-  print(a, 'of type', type(a))
+a = 5
+print(a, 'of type', type(a))
+a = 'hello'
+print(a, 'of type', type(a))
 \end{lstlisting}
 
 Now let's execute this code.
 
 \begin{lstlisting}[language=bash]
-  doudoush:~$ python3 variable.py
-   5 of type <class 'int'>
-   hello of type <class 'str'>
-  doudoush:~$
+doudoush:~$ python3 variable.py
+ 5 of type <class 'int'>
+ hello of type <class 'str'>
+doudoush:~$
 \end{lstlisting}
 
 While other languages (like C++) would have complained that you cannot assign
@@ -46,25 +46,25 @@ an error happens. For example, if you forget to define a variable, the error wil
 be raised only when you try to use this variable/
 
 \begin{lstlisting}[language=python]
-  blossom = 'commander and the leader'
-  bubbles = 'the joy and a laugher'
+blossom = 'commander and the leader'
+bubbles = 'the joy and a laugher'
 
-  print('Blossom', blossom)
-  print('Bubbles', bubbles)
-  print('Buttercup', buttercup)
+print('Blossom', blossom)
+print('Bubbles', bubbles)
+print('Buttercup', buttercup)
 \end{lstlisting}
 
 Gives the output:
 
 \begin{lstlisting}[language=bash]
-  doudoush:~$ python3 variables.py
-   Blossom commander and the leader
-   Bubbles the joy and a laugher
-   Traceback (most recent call last):
-     File "variables.py", line 12, in <module>
-       print('Buttercup', buttercup)
-   NameError: name 'buttercup' is not defined
-  doudoush:~$
+doudoush:~$ python3 variables.py
+ Blossom commander and the leader
+ Bubbles the joy and a laugher
+ Traceback (most recent call last):
+   File "variables.py", line 12, in <module>
+     print('Buttercup', buttercup)
+ NameError: name 'buttercup' is not defined
+doudoush:~$
 \end{lstlisting}
 
 Other languages like C++ would have complained that the variable ``buttercup''
@@ -87,25 +87,25 @@ print(cactus, 'of type', type(cactus))
 Outputs:
 
 \begin{lstlisting}[language=bash]
-  doudoush:~$ python3 variables.py
-    4.5 of type <class 'float'>
-  doudoush:~$
+doudoush:~$ python3 variables.py
+  4.5 of type <class 'float'>
+doudoush:~$
 \end{lstlisting}
 
 Pretty obvious yes. But what happens if we try to add an integer to a string?
 
 \begin{lstlisting}[language=python]
-  cactus = 3
-  cactus += ' is your lucky number'
+cactus = 3
+cactus += ' is your lucky number'
 \end{lstlisting}
 
 \begin{lstlisting}[language=bash]
-  doudoush:~$ python3 variables.py
-    Traceback (most recent call last):
-    File "variables.py", line 2, in <module>
-      cactus += ' is your lucky number'
-      TypeError: unsupported operand type(s) for +=: 'int' and 'str'
-  doudoush:~$
+doudoush:~$ python3 variables.py
+  Traceback (most recent call last):
+  File "variables.py", line 2, in <module>
+    cactus += ' is your lucky number'
+    TypeError: unsupported operand type(s) for +=: 'int' and 'str'
+doudoush:~$
 \end{lstlisting}
 
 This is because it tries to call the ``+'' operator from the ``int'' primitive type.
@@ -122,17 +122,17 @@ the other way around, and try to convert 3 into ``3``. The cast operators are si
 the type of the variable used as a function:
 
 \begin{lstlisting}[language=python]
-  cactus = 3
-  cactus = str(cactus) + ' is your lucky number'
-  print(cactus)
+cactus = 3
+cactus = str(cactus) + ' is your lucky number'
+print(cactus)
 \end{lstlisting}
 
 Which works as expected:
 
 \begin{lstlisting}[language=bash]
-  doudoush:~$ python3 variables.py
-    3 is your lucky number
-  doudoush:~$
+doudoush:~$ python3 variables.py
+  3 is your lucky number
+doudoush:~$
 \end{lstlisting}
 
 However, for string there is a much better way of doing this: string formatting!
@@ -140,8 +140,8 @@ There are three different ways of doing string formatting: the old way, the mode
 and the very modern way. The old way is a C-style formatting:
 
 \begin{lstlisting}[language=python]
-  cactus = 3
-  my_str = '%d is your lucky number' % cactus
+cactus = 3
+my_str = '%d is your lucky number' % cactus
 \end{lstlisting}
 
 You can also define the way you want the number will be displayed. For example, if you
@@ -149,18 +149,18 @@ want to add zeros before the number, you can write ``\%03d'' to specify that
 the number should have 3 digits:
 
 \begin{lstlisting}[language=python]
-  my_str = '%03d is your lucky number' % 3
-  print(my_str)
-  my_str = '%03d is our lucky number' % 25
-  print(my_str)
+my_str = '%03d is your lucky number' % 3
+print(my_str)
+my_str = '%03d is our lucky number' % 25
+print(my_str)
 \end{lstlisting}
 
 Will output:
 \begin{lstlisting}[language=bash]
-  doudoush:~$ python3 variables.py
-    003 is your lucky number
-    025 is our lucky number
-  doudoush:~$
+doudoush:~$ python3 variables.py
+  003 is your lucky number
+  025 is our lucky number
+doudoush:~$
 \end{lstlisting}
 
 The number got padded with two zeros, and the number twenty five with only one zero,
@@ -173,9 +173,9 @@ number, we would use ``\%f'', for string ``\%s''. We can also use this syntax to
 substitute multiple variables:
 
 \begin{lstlisting}[language=python]
-  cactus = 3
-  kind = 'lucky number'
-  my_str = '%d is your %s' % (cactus, kind)
+cactus = 3
+kind = 'lucky number'
+my_str = '%d is your %s' % (cactus, kind)
 \end{lstlisting}
 
 
@@ -184,9 +184,9 @@ that you do not need to specify the type of the variable you want to combine.
 We can then write the previous code like this:
 
 \begin{lstlisting}[language=python]
-  cactus = 3
-  kind = 'lucky number'
-  my_str = '{} is your {}'.format(cactus, kind)
+cactus = 3
+kind = 'lucky number'
+my_str = '{} is your {}'.format(cactus, kind)
 \end{lstlisting}
 
 Here, we just need to add ``\{\}'' every time we need to insert a variable. We them
@@ -194,19 +194,19 @@ substitute all of these variables as arguments to the format function. We can al
 do zeros padding this way:
 
 \begin{lstlisting}[language=python]
-  cactus = 3
-  kind = 'lucky number'
-  my_str = '{:03} is your {}'.format(cactus, kind)
+cactus = 3
+kind = 'lucky number'
+my_str = '{:03} is your {}'.format(cactus, kind)
 \end{lstlisting}
 
 Finally, the very modern (Python >= 3.6) way does not require the use of the format
 function, and uses a new language syntax:
 
 \begin{lstlisting}[language=python]
-  cactus = 3
-  kind = 'lucky number'
-  my_str = f'{cactus:03} is your {kind}'
-  print(my_str)
+cactus = 3
+kind = 'lucky number'
+my_str = f'{cactus:03} is your {kind}'
+print(my_str)
 \end{lstlisting}
 
 Here, we just need to add the ``f'' character before the string to specify that
@@ -214,9 +214,9 @@ this string needs formatting, and we then just add the name of the variable dire
 where we want them to appear. This of course gives the same output:
 
 \begin{lstlisting}[language=bash]
-  doudoush:~$ python3 variables.py
-    003 is your lucky number
-  doudoush:~$
+doudoush:~$ python3 variables.py
+  003 is your lucky number
+doudoush:~$
 \end{lstlisting}
 
 \subsection{Functions and argument forwarding}
@@ -225,8 +225,8 @@ at functions in general in Python. First thing first, we create functions using
 the ``def'' keyword, as follow:
 
 \begin{lstlisting}[language=python]
-  def say_hello():
-    print('Hello!')
+def say_hello():
+  print('Hello!')
 \end{lstlisting}
 
 Note that we indented the code after defining our function. When we increment the
@@ -248,10 +248,10 @@ Another important thing to know about functions is that functions are also varia
 code works perfectly:
 
 \begin{lstlisting}[language=python]
-  def say_hello():
-    print('Hello!')
-  new_func = say_hello
-  new_func()
+def say_hello():
+  print('Hello!')
+new_func = say_hello
+new_func()
 \end{lstlisting}
 
 Last important thing you need to know is that there is no such thing as void functions in Python.
@@ -262,45 +262,45 @@ like ``NULL/nullptr'' in C/C++. Like all other variables, it has a type, which i
 So if we do:
 
 \begin{lstlisting}[language=python]
-  def say_hello():
-    print('Hello!')
-  new_func = say_hello
-  result = new_func()
-  print(type(result))
+def say_hello():
+  print('Hello!')
+new_func = say_hello
+result = new_func()
+print(type(result))
 \end{lstlisting}
 
 We get:
 \begin{lstlisting}[language=bash]
-  doudoush:~$ python3 func.py
-    Hello!
-    <class 'NoneType'>
-  doudoush:~$
+doudoush:~$ python3 func.py
+  Hello!
+  <class 'NoneType'>
+doudoush:~$
 \end{lstlisting}
 
 You can otherwise return a real result using the ``return'' keyword:
 
 \begin{lstlisting}[language=python]
-  def say_hello():
-    return 'Hello!'
+def say_hello():
+  return 'Hello!'
 
-  result = say_hello()
-  print(result)
+result = say_hello()
+print(result)
 \end{lstlisting}
 
 \begin{lstlisting}[language=bash]
-  doudoush:~$ python3 func.py
-    Hello!
-  doudoush:~$
+doudoush:~$ python3 func.py
+  Hello!
+doudoush:~$
 \end{lstlisting}
 
 Also note that there is no static return type in a function, as the language is dynamically typed. You can
 then do:
 
 \begin{lstlisting}
-  def my_func(i):
-    if i < 2:
-      return True
-    return 'cactus'
+def my_func(i):
+  if i < 2:
+    return True
+  return 'cactus'
 \end{lstlisting}
 
 That's pretty much all you need to know about functions for now.
@@ -321,19 +321,19 @@ new object. For example, int, float, string, tuples are immutable. You
 cannot do:
 
 \begin{lstlisting}[language=python]
-  cactus = 'hallo'
-  cactus[1] = 'e'
+cactus = 'hallo'
+cactus[1] = 'e'
 \end{lstlisting}
 
 You will get the following error message:
 
 \begin{lstlisting}[language=bash]
-  doudoush:~$ python3 variables.py
-    Traceback (most recent call last):
-    File "forwarding.py", line 2, in <module>
-      a[1] = 'e'
-      TypeError: 'str' object does not support item assignment
-  doudoush:~$
+doudoush:~$ python3 variables.py
+  Traceback (most recent call last):
+  File "forwarding.py", line 2, in <module>
+    a[1] = 'e'
+    TypeError: 'str' object does not support item assignment
+doudoush:~$
 \end{lstlisting}
 
 Lists however are mutable, you can change elements inside a list
@@ -353,20 +353,20 @@ remember, binding a variable is the action of linking a variable to its actual v
 Let's first take a look at a quick example:
 
 \begin{lstlisting}[language=python]
-  a = 5
-  b = a
-  b += 1
-  print('a is', a)
-  print('b is', b)
+a = 5
+b = a
+b += 1
+print('a is', a)
+print('b is', b)
 \end{lstlisting}
 
 Which gives:
 
 \begin{lstlisting}[language=bash]
-  doudoush:~$ python3 forwarding.py
-    a is 5
-    b is 6
-  doudoush:~$
+doudoush:~$ python3 forwarding.py
+  a is 5
+  b is 6
+doudoush:~$
 \end{lstlisting}
 
 Here, ``b'' is a reference on a NEW object with value 5. Thus, changing ``b'' DOES NOT have any impact
@@ -374,11 +374,11 @@ on the variable ``a''. You can imagine that when we do ``b = a'', a is actually 
 meaning that this code is exactly the same:
 
 \begin{lstlisting}[language=python]
-  a = 5
-  b = 5
-  b += 1
-  print('a is', a)
-  print('b is', b)
+a = 5
+b = 5
+b += 1
+print('a is', a)
+print('b is', b)
 \end{lstlisting}
 
 Basically, when you create a variable, you are allocating some memory and assigning a reference
@@ -389,26 +389,26 @@ Now, let's get back to the real problem: how are arguments passed in functions. 
 BUT, without forgetting the rules aforementioned. Let's take a look at a quick example:
 
 \begin{lstlisting}[language=python]
-  def my_function(my_int, my_list):
-    my_list[2] = 5
-    my_int += 4
-    print('In function', my_int)
+def my_function(my_int, my_list):
+  my_list[2] = 5
+  my_int += 4
+  print('In function', my_int)
 
-  my_int = 1
-  my_list = [0, 1, 2, 3, 4]
-  my_function(my_int, my_list)
-  print('my_int', my_int)
-  print('my_list', my_list)
+my_int = 1
+my_list = [0, 1, 2, 3, 4]
+my_function(my_int, my_list)
+print('my_int', my_int)
+print('my_list', my_list)
 \end{lstlisting}
 
 Gives:
 
 \begin{lstlisting}[language=bash]
-  doudoush:~$ python3 forwarding.py
-    In function 5
-    my_int 1
-    my_list [0, 1, 5, 3, 4]
-  doudoush:~$
+doudoush:~$ python3 forwarding.py
+  In function 5
+  my_int 1
+  my_list [0, 1, 5, 3, 4]
+doudoush:~$
 \end{lstlisting}
 
 ``my\_int'' is immutable. So whatever you do, you cannot change it. ``my\_list'' is mutable,
@@ -416,29 +416,29 @@ so we can change the elements inside the list in the function. But what if we tr
 reassign ``my\_list?'' Let's see:
 
 \begin{lstlisting}[language=python]
-  def my_function(my_int, my_list):
-    my_list[2] = 5
-    my_int += 4
-    print('In function', my_int)
-    my_list = [3, 6, 25]
-    print('In function', my_list)
+def my_function(my_int, my_list):
+  my_list[2] = 5
+  my_int += 4
+  print('In function', my_int)
+  my_list = [3, 6, 25]
+  print('In function', my_list)
 
-  my_int = 1
-  my_list = [0, 1, 2, 3, 4]
-  my_function(my_int, my_list)
-  print('my_int', my_int)
-  print('my_list', my_list)
+my_int = 1
+my_list = [0, 1, 2, 3, 4]
+my_function(my_int, my_list)
+print('my_int', my_int)
+print('my_list', my_list)
 \end{lstlisting}
 
 Which gives:
 
 \begin{lstlisting}[language=bash]
-  doudoush:~$ python3 forwarding.py
-    In function 5
-    In function [3, 6, 25]
-    my_int 1
-    my_list [0, 1, 5, 3, 4]
-  doudoush:~$
+doudoush:~$ python3 forwarding.py
+  In function 5
+  In function [3, 6, 25]
+  my_int 1
+  my_list [0, 1, 5, 3, 4]
+doudoush:~$
 \end{lstlisting}
 
 So what happened here? Remember what I said? You CANNOT REBIND A REFERENCE.
@@ -465,20 +465,20 @@ As for the functions, conditions and loops live in scopes, defined with indent l
 Conditions are defined with the ``if'' keyword, as follow:
 
 \begin{lstlisting}[language=python]
-  def is_even(n):
-    if n % 2 == 0:
-      return True
-    return False
+def is_even(n):
+  if n % 2 == 0:
+    return True
+  return False
 \end{lstlisting}
 
 You can also check multiple conditions this way:
 \begin{lstlisting}[language=python]
-    if something:
-      blabla()
-    elif something_else:
-      blablabla()
-    else:
-      blibloblablu()
+  if something:
+    blabla()
+  elif something_else:
+    blablabla()
+  else:
+    blibloblablu()
 \end{lstlisting}
 
 
@@ -489,9 +489,9 @@ keyword. The first kind of loop repeats a scope of instructions until a criterio
 For example:
 
 \begin{lstlisting}
-  i = 0
-  while i < 10:
-    i += 1
+i = 0
+while i < 10:
+  i += 1
 \end{lstlisting}
 
 Here we are incrementing the value of ``i'' by 1 until it reaches 10. Unlike other
@@ -501,12 +501,12 @@ to be true for the code to be executed even the first time.
 Let's take a look at the following C++ code:
 
 \begin{lstlisting}[language=C++]
-  int i = 20;
-  do
-  {
-    i += 1;
-  } while(i < 10);
-  std::cout << i << std::endl;
+int i = 20;
+do
+{
+  i += 1;
+} while(i < 10);
+std::cout << i << std::endl;
 \end{lstlisting}
 
 If we compile and execute this code inside a main, it will display 21. This is because
@@ -515,19 +515,19 @@ As I said before, there is no such thing in Python. However, you can emulate thi
 using other methods. For example:
 
 \begin{lstlisting}[language=python]
-  while True:
-    something()
-    if not condition:
-      break
+while True:
+  something()
+  if not condition:
+    break
 \end{lstlisting}
 
 For-loop functions iterate over all elements of an iterable object. We can then for example
 print all elements in a list using a for loop:
 
 \begin{lstlisting}
-  my_list = [1, 2, 3]
-  for elt in my_list:
-     print(elt)
+my_list = [1, 2, 3]
+for elt in my_list:
+   print(elt)
 \end{lstlisting}
 
 You can basically give any kind of ``iterable'' objects to the for loop. We will see in the future
@@ -546,7 +546,222 @@ that you can even create your own kind of iterable objects.
   in the list. This function should not return a new list, but change the original one.
 \end{itemize}
 
-\subsection{Modules and Packages}
+\subsection{Modules, packages and main}
+\subsubsection{Modules}
+To enable code sharing between different files, Python uses a concept called modules. A module
+is nothing more than a Python file that you include in another file. For example, let's say
+you declare a function in a file and want to use it in another file:
+
+\begin{lstlisting}[language=python]
+# Declaring a function in utils.py
+# Oh ! did you see? It's our first comment ! :D
+
+def noodle_house(thirsty):
+   if thirsty:
+      return 'Pho Thai'
+   return 'Mapo Tofu'
+\end{lstlisting}
+
+We can use this function in our modules.py file:
+
+\begin{lstlisting}[language=python]
+import utils
+
+print('Yesterday I was thirsty, so I ordered',
+      utils.noodle_house(True))
+
+print('But usually, I order', utils.noodle_house(False))
+\end{lstlisting}
+
+Which gives the following output:
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 modules.py
+  Yesterday I was thirsty, so I ordered Pho Thai
+  But usually, I order Mapo Tofu
+doudoush:~$
+\end{lstlisting}
+
+Here, we used the ``import'' keyword followed by the name of the file we want to import
+without the extension. The result is a new variable named ``utils'', which contains all functions
+and variables defined in the scope of the module. We can access these variables
+using ``.'', as in ``utils.noodle\_house''. We can also choose to import only the function
+that we want using the following syntax:
+
+\begin{lstlisting}[language=python]
+from utils import noodle_house
+
+print('Yesterday I was thirsty, so I ordered',
+      noodle_house(True))
+
+print('But usually, I order', noodle_house(False))
+\end{lstlisting}
+
+However, when we do so, we can only access the function we imported. We cannot access anything
+else about the ``utils'' module.
+
+Two important things to note here. First, no matter how you choose to import the module,
+(using ``import'' or ``from x import y'') Python will interpret the whole file. What does
+it mean? Let's look at an example:
+
+\begin{lstlisting}[language=python]
+# Declaring a function in utils.py
+
+print('Loading the utils module...')
+
+def noodle_house(thirsty):
+   if thirsty:
+      return 'Pho Thai'
+   return 'Mapo Tofu'
+
+print('Done loading the module')
+\end{lstlisting}
+
+The Python binary has a command argument that allows to execute some Python code without
+having to put it in a file. It's very useful when you just want to test a single line code.
+This is what we will do here, as we just want to check the behavior of the ``import'' function.
+To do so, we just need to use the ``-c'' option:
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 -c 'import utils'
+  Loading the utils module...
+  Done loading the module
+doudoush:~$ python3 -c 'from utils import noodle_house'
+  Loading the utils module...
+  Done loading the module
+doudoush:~$
+\end{lstlisting}
+
+So keep in mind that if you load a module, the whole file is interpreted.
+
+\vspace{5mm}
+
+Second, the imported module is a variable like the others.
+You may or may not know, but we can delete variables using the ``del'' keyword. We can then
+unimport modules the same way:
+
+\begin{lstlisting}[language=python]
+import utils
+del utils
+utils.noodle_house()
+\end{lstlisting}
+
+This gives the following error:
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 del_module.py
+  Traceback (most recent call last):
+    File "del_modules.py", line 3, in <module>
+      utils.noodle_house()
+  NameError: name 'utils' is not defined
+doudoush:~$
+\end{lstlisting}
+
+That's just an example illustrating that it's a variable like the others, but it's not really useful.
+Let's look at another funny example. It's a variable right? Then, I can pass it to a function right?
+
+Let's consider the following Python file:
+
+\begin{lstlisting}[language=python]
+# This is funny.py
+def place_order(module):
+  print('Hello! I would like', module.noodle_house(True))
+\end{lstlisting}
+
+Now, let's modify a bit the ``modules.py'' file:
+
+\begin{lstlisting}[language=python]
+import utils
+import funny
+funny.place_order(utils)
+\end{lstlisting}
+
+It works perfectly fine! The loaded module is a variable that is passed to the ``place\_order''
+function of the ``funny'' module. We don't need to load the ``utils'' module in ``funny'' as
+it's already given as an parameter of the function. Pretty cool right? But wait. This is super
+useful! Because it means that if I need a function from a module in multiple other modules,
+I can just give it as a parameter! I then don't need to import the module in all the other modules!
+Right? Well, no. I mean yes, but Python is smarter than that. In a Python session, if you import
+a module once, and try to import it again, it will not be reloaded. Let's update a bit the previous
+files.
+
+\begin{lstlisting}[language=python]
+# This is funny.py
+import utils
+
+def place_order():
+  print('Hello! I would like', utils.noodle_house(True))
+\end{lstlisting}
+
+And the ``modules.py'' file:
+
+\begin{lstlisting}[language=python]
+import utils
+print('Loading funny')
+import funny
+funny.place_order()
+\end{lstlisting}
+
+And now, let's interpret the ``module.py'' file.
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 module.py
+  Loading the utils module...
+  Done loading the module
+  Loading funny
+  Hello! I would like Pho Thai
+doudoush:~$
+\end{lstlisting}
+
+As you can see, the ``Loading the utils module'' statement got printed only once,
+even though we imported the ``utils'' module both in ``module.py'' and ``funny.py''.
+So don't worry, Python is smart.
+
+\vspace{5mm}
+
+Last thing about modules, is that there is actually a module to load modules (*mind explosion*).
+Let's say we have two different implementation of the same function in two different modules.
+We may want to load them dynamically (at runtime). Let's consider the following files:
+
+\begin{lstlisting}[language=python]
+# file noodle_house.py
+
+def order():
+  return 'Mapo Tofu'
+\end{lstlisting}
+
+\begin{lstlisting}[language=python]
+# file panera.py
+
+def order():
+  return 'Steak and arugula sandwich'
+\end{lstlisting}
+
+We can dynamically load these modules this way:
+
+\begin{lstlisting}[language=python]
+# file order.py
+from importlib import import_module
+
+restaurant = import_module('noodle_house')
+print('From Noodle House, I want', restaurant.order())
+
+restaurant = import_module('panera')
+print('From Panera, I want', restaurant.order())
+\end{lstlisting}
+
+Which thus gives:
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 order.py
+From Noodle House, I want Mapo Tofu
+From Panera, I want Steak and arugula sandwich
+doudoush:~$
+\end{lstlisting}
+
+Pretty cool right?
+
+% packages
+% main
 
 \subsection{Dealing with external resources}
 \subsubsection{Parsing arguments}
@@ -554,6 +769,7 @@ that you can even create your own kind of iterable objects.
 \subsubsection{The sys module}
 
 \subsection{Exercise 2}
+% dynamic load something given as argument
 
 \subsection{Data structures}
 \subsubsection{List}
