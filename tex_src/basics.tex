@@ -760,7 +760,218 @@ doudoush:~$
 
 Pretty cool right?
 
-% packages
+\subsubsection{Packages}
+
+Python packages are nothing more than a suite of modules. In other words,
+it's a directory with python files. Let's imagine we want to create a ``doudou'' package.
+This package will host some utilities (bake cookies, explain python) from doudou split
+into several modules (baking, coding). We will then have the following architecture:
+
+\vspace{5mm}
+
+\dirtree{%
+.1 ./.
+.1 main.py.
+.1 doudou.
+.2 baking.py.
+.2 coding.py.
+}
+
+We could for example have the following code:
+
+\begin{lstlisting}[language=python]
+# File baking.py
+def _bake(pastry):
+  print(f'Baking {pastry}...')
+
+def bake_cookies():
+  _bake('cookies')
+
+def bake_macarons():
+  _bake('macarons')
+\end{lstlisting}
+
+\begin{lstlisting}[language=python]
+# File coding.py
+def explain_python():
+  print('Python is interpreted')
+
+def correct_exercise():
+  print('Great! 20/20')
+\end{lstlisting}
+
+\begin{lstlisting}[language=python]
+# File main.py
+from doudou.baking import bake_cookies, bake_macarons
+from doudou.coding import correct_exercise, explain_python
+
+print(``I'm hungry!'')
+bake_cookies()
+bake_macarons()
+
+print(``Teach me Sempai'')
+explain_python()
+correct_exercise()
+\end{lstlisting}
+
+We could of course also do:
+\begin{lstlisting}[language=python]
+# File main.py
+import doudou
+
+doudou.baking.bake_cookies()
+doudou.baking.bake_macarons()
+
+doudou.coding.explain_python()
+doudou.coding.correct_exercise()
+\end{lstlisting}
+
+If we execute main, we get the expected behavior:
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 main.py
+  Baking cookies...
+  Baking macarons...
+  Python is interpreted
+  Great! 20/20
+doudoush:~$
+\end{lstlisting}
+
+So as you can see, we can now from the ``main.py'' file access modules of the ``doudou''
+package and then functions of these modules. But this is not very clean. Indeed, we may
+not be interested in the way the modules are designed, but only in the functions inside.
+In this example, I don't care that ``bake\_cookies'' and ``explain\_python'' are in
+different modules. They are both part of the ``doudou'' package and I want to be able to
+access them the same way, as doudou skills. Python has an efficient way of organizing
+packages. For this, we need to add a ``\_\_init\_\_.py'' file in the ``doudou'' directory,
+as follow:
+
+\vspace{5mm}
+
+\dirtree{%
+.1 ./.
+.1 main.py.
+.1 doudou.
+.2 \_\_init\_\_.py.
+.2 baking.py.
+.2 coding.py.
+}
+
+\vspace{5mm}
+
+In this file, we can specify the functions we want to expose as part of the package.
+For example, you may have noticed that there is a ``\_bake'' function in the baking package.
+Usually, when the name of a function starts with ``\_'', it means that it is private.
+We thus don't want to expose it in our package. Our ``\_\_init\_\_.py'' file could then
+look like this:
+
+\begin{lstlisting}[language=python]
+from .baking import bake_cookies, bake_macarons
+from .coding import correct_exercise, explain_python
+\end{lstlisting}
+
+The ``main.py'' file could then be updated this way:
+
+\begin{lstlisting}[language=python]
+from doudou import bake_cookies, explain_python
+
+bake_cookies()
+explain_python()
+\end{lstlisting}
+
+Or also:
+\begin{lstlisting}[language=python]
+import doudou
+
+doudou.bake_cookies()
+doudou.explain_python()
+\end{lstlisting}
+
+Which would give the expected output:
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 main.py
+Baking cookies...
+Python is interpreted
+doudoush:~$
+\end{lstlisting}
+
+However, if we try to access the ``\_bake'' directly from the ``doudou'' package:
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 -c 'from doudou import _bake'
+    Traceback (most recent call last):
+    File "<string>", line 1, in <module>
+  ImportError: cannot import name '_bake' from 'doudou'
+doudoush:~$
+\end{lstlisting}
+
+Note that our previous code would still work. We can still access the function
+from the module, and not only from the package. That means that we can still access
+the ``\_bake'' function from the module:
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 -c 'from doudou.baking import _bake; _bake("marbre")'
+Baking marbre...
+doudoush:~$
+\end{lstlisting}
+
+Indeed, nothing is private in Python. Also note that when we import a function from
+a module, the ``\_\_init\_\_.py'' will still be interpreted. For example, if we update
+the init file this way:
+
+\begin{lstlisting}[language=python]
+print('Loading init')
+from .baking import bake_cookies, bake_macarons
+from .coding import correct_exercise, explain_python
+print('Done loading init')
+\end{lstlisting}
+
+And add this line at the top of ``baking.py'':
+\begin{lstlisting}[language=python]
+print('Loading baking')
+\end{lstlisting}
+
+
+And try to import it these ways:
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 -c 'from doudou import bake_cookies'
+  Loading init
+  Loading baking
+  Done loading init
+doudoush:~$ python3 -c 'from doudou.baking import bake_cookies'
+  Loading init
+  Loading baking
+  Done loading init
+doudoush:~$
+\end{lstlisting}
+
+So as you can see, the init file is always interpreted. But what if we try to import
+a module that is not part of the init file? Let's remove the baking module from the
+init file:
+
+\begin{lstlisting}[language=python]
+print('Loading init')
+from .coding import correct_exercise, explain_python
+print('Done loading init')
+\end{lstlisting}
+
+And now, let's import it again:
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 -c 'from doudou.baking import bake_cookies'
+  Loading init
+  Done loading init
+  Loading baking
+doudoush:~$
+\end{lstlisting}
+
+The order has changed. This is the expected behavior. Indeed, as I mentioned, the
+init file will always be loaded. So when we run ``from doudou.baking import'',
+it will first read the ``doudou'' module and see if it imports something useful from
+the module. Then, it will go into the ``baking'' module and load it.
+
 % main
 
 \subsection{Dealing with external resources}
@@ -770,6 +981,7 @@ Pretty cool right?
 
 \subsection{Exercise 2}
 % dynamic load something given as argument
+% Implement several restaurants as packages 
 
 \subsection{Data structures}
 \subsubsection{List}
