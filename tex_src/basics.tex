@@ -805,11 +805,9 @@ def correct_exercise():
 from doudou.baking import bake_cookies, bake_macarons
 from doudou.coding import correct_exercise, explain_python
 
-print(``I'm hungry!'')
 bake_cookies()
 bake_macarons()
 
-print(``Teach me Sempai'')
 explain_python()
 correct_exercise()
 \end{lstlisting}
@@ -1112,9 +1110,77 @@ doudoush:~$
 \end{lstlisting}
 
 \subsection{Dealing with external resources}
-\subsubsection{Parsing arguments}
+\subsubsection{Useful system packages}
+
+\paragraph{OS}
+As you may know, Python is a cross platform language. That means that it
+is meant to run on different platform without changing anything on the code.
+So basically all the Python code we've written until now will run the same way
+on Windows, Linux or MacOS. For what we've done so far, it's quite easy as we
+didn't use any external resources. As soon as we need to access things outside
+the language environment, it gets more difficult to be cross platform. This is
+where the ``os'' package comes handy. It contains all the platform-specific utilities.
+Or to be more precise, it contains generic implementations of platform-specific
+functions.
+
+\vspace{5mm}
+
+That may not be obviously useful, but let's take a look at a very simple example:
+paths. Windows and UNIX systems do not handle paths the same way. For example:
+
+\begin{lstlisting}[language=python]
+windows_path = 'one\two\three\four'
+unix_path = 'one/two/three/four'
+\end{lstlisting}
+
+It would be really cumbersome to write two version of our paths. The ``os'' package
+provides a useful function in the ``path'' module called ``join''. This function
+takes an ``infinite'' number of arguments, and recreates a path using the correct
+path separator w.r.t the system we are running it on:
+
+\begin{lstlisting}[language=python]
+import os
+my_path = os.path.join('one', 'two', 'three', 'four')
+print(my_path)
+\end{lstlisting}
+
+Now let's execute it on Windows (powershell) and MacOS (doudoush):
+
+\begin{lstlisting}[language=bash]
+PS D:\> python3.exe os_package.py
+  one\two\three\four
+PS D:\>
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 os_package.py
+  one/two/three/four
+doudoush:~$
+\end{lstlisting}
+
+\vspace{5mm}
+
+Another important difference between these two systems are endlines. On UNIX systems,
+new lines are represented with the ``\textbackslash n'' character, while
+Windows uses ``\textbackslash r\textbackslash n''.
+The ``os'' package has a variable called ``linesep'' to represent this. So for example,
+if you want to replace all new lines in a string by spaces:
+
+\begin{lstlisting}[language=python]
+# UNIX specific
+my_str = my_str.replace('\n', ' ')
+
+# Windows specific
+my_str = my_str.replace('\r\n', ' ')
+
+# Cross-platform
+import os
+my_str = my_str.replace(os.linesep, ' ')
+\end{lstlisting}
+
+
 \subsubsection{Files}
-\subsubsection{The sys module}
+\subsubsection{Parsing arguments}
 
 \subsection{Exercise 2}
 % dynamic load something given as argument
