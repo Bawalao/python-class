@@ -1110,16 +1110,16 @@ doudoush:~$
 \end{lstlisting}
 
 \subsection{Dealing with external resources}
-\subsubsection{Useful system packages}
+\subsubsection{Useful system modules}
 
-\paragraph{The ``os'' package}
+\paragraph{The ``os'' module}
 As you may know, Python is a cross platform language. That means that it
 is meant to run on different platform without changing anything on the code.
 So basically all the Python code we've written until now will run the same way
 on Windows, Linux or MacOS. For what we've done so far, it's quite easy as we
 didn't use any external resources. As soon as we need to access things outside
 the language environment, it gets more difficult to be cross platform. This is
-where the ``os'' package comes handy. It contains all the platform-specific utilities.
+where the ``os'' module comes handy. It contains all the platform-specific utilities.
 Or to be more precise, it contains generic implementations of platform-specific
 functions.
 
@@ -1133,12 +1133,12 @@ windows_path = 'one\two\three\four'
 unix_path = 'one/two/three/four'
 \end{lstlisting}
 
-Of course, as a cross platform language by design, the the ``os'' package brings
+Of course, as a cross platform language by design, the ``os'' module brings
 a way to get the name of the current operating system, through ``os.name''. This
 variable contains ``posix'' for UNIX systems and ``nt'' for Windows (note that
-we can get more precise OS information with other packages). So we could check the OS
+we can get more precise OS information with other modules). So we could check the OS
 and change the values of the path accordingly. However, it would be really
-cumbersome to write two version of our paths. The ``os'' package
+cumbersome to write two version of our paths. The ``os'' module
 provides a useful function in the ``path'' module called ``join''. This function
 takes an ``infinite'' number of arguments, and recreates a path using the correct
 path separator w.r.t the system we are running it on:
@@ -1152,18 +1152,18 @@ print(my_path)
 Now let's execute it on Windows (powershell) and MacOS (doudoush):
 
 \begin{lstlisting}[language=bash]
-PS D:\> python3.exe os_package.py
+PS D:\> python3.exe os_module.py
   one\two\three\four
 PS D:\>
 \end{lstlisting}
 
 \begin{lstlisting}[language=bash]
-doudoush:~$ python3 os_package.py
+doudoush:~$ python3 os_module.py
   one/two/three/four
 doudoush:~$
 \end{lstlisting}
 
-The ``path'' module of the ``os'' package has a lot of other useful functions for
+The ``path'' module within the ``os'' module has a lot of other useful functions for
 manipulating path. For example, ``os.path.basename'' gives the last element of a path
 (in the previous example ``four''). You can also check if a file exists using ``/.os./.path./.exists''.
 
@@ -1173,7 +1173,7 @@ manipulating path. For example, ``os.path.basename'' gives the last element of a
 Another important difference between these two systems are endlines. On UNIX systems,
 new lines are represented with the ``\textbackslash n'' character, while
 Windows uses ``\textbackslash r\textbackslash n''.
-The ``os'' package has a variable called ``linesep'' to represent this. So for example,
+The ``os'' module has a variable called ``linesep'' to represent this. So for example,
 if you want to replace all new lines in a string by spaces:
 
 \begin{lstlisting}[language=python]
@@ -1190,7 +1190,7 @@ my_str = my_str.replace(os.linesep, ' ')
 
 \vspace{5mm}
 
-The ``os'' packages also brings a lot of useful function for manipulating files
+The ``os'' module also brings a lot of useful function for manipulating files
 and directories, environment variables, working directory:
 
 \begin{itemize}
@@ -1207,9 +1207,9 @@ and directories, environment variables, working directory:
   when using this function. Remember that with great power comes great responsibility.
 \end{itemize}
 
-\paragraph{The ``sys'' package}
+\paragraph{The ``sys'' module}
 
-This package provides an interface to the command line interpreter. You can
+This module provides an interface to the command line interpreter. You can
 for example access the command line arguments, the stdin, stdout or stderr
 file descriptors, the ``PATH'' environment variable...
 
@@ -1230,8 +1230,8 @@ if __name__ == '__main__':
 Let's run it !
 
 \begin{lstlisting}[language=bash]
-doudoush:~$ python3 sys_package.py marie deniiise
-  ['sys_package.py', 'marie', 'deniiise']
+doudoush:~$ python3 sys_module.py marie deniiise
+  ['sys_module.py', 'marie', 'deniiise']
 doudoush:~$
 \end{lstlisting}
 
@@ -1241,8 +1241,8 @@ in ``sys.argv''. But as you can see, we got ``marie'' and ``deniiise'' as two di
 arguments (as they were separated by a space). Now let's use some other arguments:
 
 \begin{lstlisting}[language=bash]
-doudoush:~$ python3 sys_package.py 3 True 25.0
-  ['sys_package.py', '3', 'True', '25.0']
+doudoush:~$ python3 sys_module.py 3 True 25.0
+  ['sys_module.py', '3', 'True', '25.0']
 doudoush:~$
 \end{lstlisting}
 
@@ -1314,6 +1314,36 @@ doudoush:~$ echo $?
 doudoush:~$
 \end{lstlisting}
 
+\vspace{5mm}
+
+\paragraph{The ``shutil'' module}
+
+Just a few words about the ``shutil'' module, which can be quite convenient when
+doing Python scripting. It basically contains all shell utilities like ``cp'', ``mv'',
+``rm''...
+
+\begin{itemize}
+\item ``shutil.copyfile'' copies a file to another file
+\item ``shutil.copy'' copies a file to a file or a directory
+\item ``shutil.copytree'' copies a directory to another directory
+\item ``shutil.move'' moves a file or a directory
+\item ``shutil.which'' gives the path to an executable
+\end{itemize}
+
+\vspace{5mm}
+
+That's pretty much all I wanted to say for these modules. Basically, remember that:
+
+\begin{itemize}
+\item ``os'' contains utilities for any platform specific functions
+\item ``sys'' provides an interface to the command line interpreter
+\item ``shutil'' gives easy access to shell functions
+\end{itemize}
+
+This tutorial was just meant to explain you the differences between these modules,
+what they serve, and basically an idea of where to find if you need something.
+Of course, most of the time we just check on StackOverflow, but it's sometimes
+faster to know where to find. With time, you will have most of these functions in mind.
 
 \subsubsection{Files}
 \subsubsection{Parsing arguments}
