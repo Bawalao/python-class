@@ -1112,7 +1112,7 @@ doudoush:~$
 \subsection{Dealing with external resources}
 \subsubsection{Useful system packages}
 
-\paragraph{OS}
+\paragraph{The ``os'' package}
 As you may know, Python is a cross platform language. That means that it
 is meant to run on different platform without changing anything on the code.
 So basically all the Python code we've written until now will run the same way
@@ -1133,7 +1133,12 @@ windows_path = 'one\two\three\four'
 unix_path = 'one/two/three/four'
 \end{lstlisting}
 
-It would be really cumbersome to write two version of our paths. The ``os'' package
+Of course, as a cross platform language by design, the the ``os'' package brings
+a way to get the name of the current operating system, through ``os.name''. This
+variable contains ``posix'' for UNIX systems and ``nt'' for Windows (note that
+we can get more precise OS information with other packages). So we could check the OS
+and change the values of the path accordingly. However, it would be really
+cumbersome to write two version of our paths. The ``os'' package
 provides a useful function in the ``path'' module called ``join''. This function
 takes an ``infinite'' number of arguments, and recreates a path using the correct
 path separator w.r.t the system we are running it on:
@@ -1158,6 +1163,11 @@ doudoush:~$ python3 os_package.py
 doudoush:~$
 \end{lstlisting}
 
+The ``path'' module of the ``os'' package has a lot of other useful functions for
+manipulating path. For example, ``os.path.basename'' gives the last element of a path
+(in the previous example ``four''). You can also check if a file exists using ``/.os./.path./.exists''.
+
+
 \vspace{5mm}
 
 Another important difference between these two systems are endlines. On UNIX systems,
@@ -1178,6 +1188,23 @@ import os
 my_str = my_str.replace(os.linesep, ' ')
 \end{lstlisting}
 
+\vspace{5mm}
+
+The ``os'' packages also brings a lot of useful function for manipulating files
+and directories, environment variables, working directory:
+
+\begin{itemize}
+\item ``os.makedirs'' creates a path. It is the equivalent to ``mkdir -p''.
+  It raises an exception if the directory already exists, unless you call it
+  with ``exist\_ok=True''
+\item ``os.listdir'' lists all files and directories of a given directory.
+  Be careful, this function returns elements IN ARBITRARY ORDER. Remember
+  to sort the output list if you need.
+\item ``os.chroot'' changes the root directory of the current process
+\item ``os.environ'' is a map that contains all environment variables.
+\end{itemize}
+
+\paragraph{The ``sys'' package}
 
 \subsubsection{Files}
 \subsubsection{Parsing arguments}
