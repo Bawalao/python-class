@@ -12,8 +12,9 @@ def posca_song():
   print('tou toudou tou tou tou touuu')
   print('tou toudou tou tou tou touuu')
 
-current_day = datetime.datetime.now().day
-if current_day % 2 == 0:
-  powerpuff_song()
-else:
-  posca_song()
+if __name__ == '__main__':
+    current_day = datetime.datetime.now().day
+    if current_day % 2 == 0:
+        powerpuff_song()
+    else:
+        posca_song()

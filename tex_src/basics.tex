@@ -1202,14 +1202,124 @@ and directories, environment variables, working directory:
   to sort the output list if you need.
 \item ``os.chroot'' changes the root directory of the current process
 \item ``os.environ'' is a map that contains all environment variables.
+\item ``os.system'' the most dangerous one. It executes a given command in a sub-shell.
+  For example ``os.system('echo doudou')'' will print ``doudou''. Be very careful
+  when using this function. Remember that with great power comes great responsibility.
 \end{itemize}
 
 \paragraph{The ``sys'' package}
+
+This package provides an interface to the command line interpreter. You can
+for example access the command line arguments, the stdin, stdout or stderr
+file descriptors, the ``PATH'' environment variable...
+
+\vspace{5mm}
+
+Let's take a closer look to the one you are the most likely to need: ``sys.argv''.
+This variable returns a list with all the arguments given to Python.
+Let's write a quick example:
+
+\begin{lstlisting}[language=python]
+import sys
+
+if __name__ == '__main__':
+    args = sys.argv
+    print(args)
+\end{lstlisting}
+
+Let's run it !
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 sys_package.py marie deniiise
+  ['sys_package.py', 'marie', 'deniiise']
+doudoush:~$
+\end{lstlisting}
+
+Remember what I said? All arguments that are given to Python. The file to execute
+is an argument. So when you run a Python script, it will always be the first argument
+in ``sys.argv''. But as you can see, we got ``marie'' and ``deniiise'' as two different
+arguments (as they were separated by a space). Now let's use some other arguments:
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 sys_package.py 3 True 25.0
+  ['sys_package.py', '3', 'True', '25.0']
+doudoush:~$
+\end{lstlisting}
+
+As you can see, no matter what you enter as argument, ``sys.argv'' will always
+have the string representation of the arguments. Here, we would need to explicitly
+cast the variables if we want them in a different type. Let's modify a bit our
+jukebox from earlier:
+
+\begin{lstlisting}[language=python]
+import sys
+from song import powerpuff_song, posca_song
+
+def jukebox(track):
+    if track == 1:
+        powerpuff_song()
+    elif track == 2:
+        posca_song()
+    else:
+        print('We only have two songs for now !')
+
+
+if __name__ == '__main__':
+    args = sys.argv
+
+    if len(args) != 2:
+        print('Usage: python3 new_jukebox.py <track>')
+        exit(1)
+
+    track = args[1]
+    if not track.isdigit():
+        print('Error: track must be an int, not', track)
+        exit(2)
+
+    print('Running jukebox!')
+    jukebox(int(track))
+\end{lstlisting}
+
+So basically here, we first checked if there were only two elements in the args
+list (remember the first one is the name of the python file). If it's not the case,
+we print an error message and exit the program with the error code 1. Then, we use
+the ``isdigit'' function (method actually, we'll see that later) of the string
+to check if the string represents a number. If it's not the case we print an error
+message as well and exit with error code 2. Finally, if everything went well, we
+cast the ``track'' string to int, and call the jukebox function. Note that this
+is not the perfect way to check if we can cast a string to an int, but we will see
+the correct method later on. Let's now run our new jukebox and check the return codes.
+Remember that the ``\$?'' variable in bash contains the exit code of the last command.
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 new_jukebox.py
+  Usage: python3 new_jukebox.py <track>
+doudoush:~$ echo $?
+  1
+doudoush:~$ python3 new_jukebox.py poscaaaa
+  Error: track must be an int, not poscaaaa
+doudoush:~$ echo $?
+  2
+doudoush:~$ python3 new_jukebox.py 3 15
+  Usage: python3 new_jukebox.py <track>
+doudoush:~$ echo $?
+  1
+doudoush:~$ python3 new_jukebox.py 2
+  Running jukebox!
+  POSCA POSCAAAA
+  tou toudou tou tou tou touuu
+  tou toudou tou tou tou touuu
+doudoush:~$ echo $?
+  0
+doudoush:~$
+\end{lstlisting}
+
 
 \subsubsection{Files}
 \subsubsection{Parsing arguments}
 
 \subsection{Exercise 2}
+% Write is_prime with error handling
 % dynamic load something given as argument
 % Implement several restaurants as packages 
 
