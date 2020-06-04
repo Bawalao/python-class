@@ -1346,6 +1346,193 @@ Of course, most of the time we just check on StackOverflow, but it's sometimes
 faster to know where to find. With time, you will have most of these functions in mind.
 
 \subsubsection{Files}
+Python provides an easy way to deal with files. First, remember how files are usually
+handled: a file is most often represented by a file descriptor. You can see it as a
+pointer to an external resource, which we usually assign an integer to. Without knowing
+it, you actually very often use the first three file descriptors:
+
+\begin{itemize}
+\item 0: Standard input (stdin)
+\item 1: Standard output (stdout)
+\item 2: Standard error (stderr)
+\end{itemize}
+
+Now let's take a look at how we can open a file in Python:
+
+\begin{lstlisting}[language=python]
+awesome_tutorial = open('doudou_tuto.txt')
+\end{lstlisting}
+
+That's it! However, it's a file descriptor, so don't forget to close it once you
+are done using it, otherwise you may end up with issues when trying to read it!
+The following code opens the file, reads the first line and closes the file:
+
+\begin{lstlisting}[language=python]
+awesome_tutorial = open('doudou_tuto.txt')
+print(awesome_tutorial.readline())
+awesome_tutorial.close()
+\end{lstlisting}
+
+Now let's look at a concrete example:
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ cat panera.txt
+ Steak and Arugula
+ Green Goddess Cobb Salad
+ Heritage Ham and Swiss
+ Roasted Turkey and Avocado BLT
+ Creamy Tomato Soup
+doudoush:~$
+\end{lstlisting}
+
+Python provides a way to easily handle file opening and closing through scopes.
+To do so, we will use a ``with'' block, which takes care of opening the file,
+and closing it when exiting the scope (more about ``with'' blocks in a following
+tutorial). Let's consider the following code:
+
+\begin{lstlisting}[language=python]
+# files.py
+with open('panera.txt') as f:
+    print(f.readline())
+    print(f.readline())
+\end{lstlisting}
+
+Which produces the following output:
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 files.py
+  Steak and Arugula
+
+  Green Goddess Cobb Salad
+
+doudoush:~$
+\end{lstlisting}
+
+Here, the file got opened as a new variable named ``f'' and got closed after the
+two prints. A few things to note here. First, you can see that there is an empty line
+printed between the sandwich and the salad. This is because the ``readline''
+function returns the whole line, including the ``newline'' character. As the
+``print'' function also adds a ``newline'' character, there is an extra one.
+To remove it, two possibilities: either we gently ask ``print'' not to add extra
+new line, or we use the ``strip'' function of the string class, which will get
+rid of the newline on the string:
+
+\begin{lstlisting}[language=python]
+# files.py
+with open('panera.txt') as f:
+    print(f.readline().strip())
+    print(f.readline(), end='')
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 files.py
+  Steak and Arugula
+  Green Goddess Cobb Salad
+doudoush:~$
+\end{lstlisting}
+
+Cool. The second thing to note here, is that the same function ``readline''
+actually printed two different things. When you read or write to a file, Python
+uses an ``offset'' that represents the position in the file. This offset changes
+every time you read something. So when you first call ``readline'' it will read
+the first line and move the offset to the end of what you just read. Thus, when
+we call ``readline'' right after, the offset being at the beginning of the next
+line, the second line is printed. Cool right? There is also a ``seek'' function
+that allows you to set the ``offset'' to a position in the file. For example:
+
+\begin{lstlisting}[language=python]
+with open('panera.txt') as f:
+    print(f.readline().strip())
+    f.seek(0)
+    print(f.readline().strip())
+\end{lstlisting}
+
+Will give:
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 files.py
+  Steak and Arugula
+  Steak and Arugula
+doudoush:~$
+\end{lstlisting}
+
+Thanks to this mechanism, we can easily iterate
+on lines of a file as it keeps track of the progress of reading the file. We can
+actually iterate over files using a for loop. This will by default use the ``endline''
+as line separator. For example:
+
+\begin{lstlisting}[language=python]
+with open('panera.txt') as f:
+    for line in f:
+        print('I want', line.strip())
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 files.py
+  I want Steak and Arugula
+  I want Green Goddess Cobb Salad
+  I want Heritage Ham and Swiss
+  I want Roasted Turkey and Avocado BLT
+  I want Creamy Tomato Soup
+doudoush:~$
+\end{lstlisting}
+
+We can also of course write to files in Python. However, we need
+to open them in the appropriate mode. The default opening mode
+in Python is 'r' which stands for ``read''. To open a file in write
+mode, we need to use the ``w'' mode. Be careful, this mode will truncate
+the file to set its size to 0, so if the file already exists, it will be fully overwritten!
+To prevent this from happening, we can use the ``a'' mode which stands for ``append''.
+The different modes are:
+
+\begin{itemize}
+\item 'r': Read mode. Offset at 0
+\item 'r+': Read and write mode. Offset at 0.
+\item 'w': Write mode, sets the size to 0 if file exists, otherwise creates new file. Offset at 0
+\item 'w+': Read and write mode, sets the size to 0 if file exists, otherwise creates new file. Offset at 0
+\item 'a': Write mode. If the file doesn't exist, it's created. Offset at the end of the file.
+\item 'a'+: Read and write mode. If the file doesn't exist, it's created. Offset at the end of the file.
+\end{itemize}
+
+You can also add the 'b' to the mode to specify you want to read/write binary, for example ``rb'' will
+allow to read binary files.
+
+\vspace{5mm}
+Let's try to write some things to files. We will use a very convenient argument of the
+``print'' function that allows to print to a specific file descriptor instead of the
+default stdout. This argument is called ``file''.
+
+\begin{lstlisting}[language=python]
+# write.py
+with open('chipotle.txt', 'w') as f:
+    print('This is my chipotle order!', file=f)
+    print('I want a burrito!', file=f)
+    print('With brown rice, no beans!', file=f)
+    print('Half chicken half steaaaak!', file=f)
+\end{lstlisting}
+
+Which will give:
+\begin{lstlisting}[language=bash]
+doudoush:~$ python3 write.py
+doudoush:~$ cat chipotle.txt
+  This is my chipotle order!
+  I want a burrito!
+  With brown rice, no beans!
+  Half chicken half steaaaak!
+doudoush:~$
+\end{lstlisting}
+
+Et voila! Pretty easy right? Also, remember that stdout and stderr are file
+descriptors like the others. So if you want to write something to stderr,
+you can use:
+
+\begin{lstlisting}[language=python]
+import sys
+print('This is a terrible error!', file=sys.stderr)
+\end{lstlisting}
+
+Which will indeed print ``This is a terrible error!'' to stderr.
+
 \subsubsection{Parsing arguments}
 
 \subsection{Exercise 2}
